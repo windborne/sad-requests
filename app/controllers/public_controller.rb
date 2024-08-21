@@ -29,6 +29,8 @@ class PublicController < ApplicationController
     request_processing_time = request_processing_end.to_f - request_processing_start.to_f
     queue_time = request_processing_start.to_f - request_start.to_f
 
+    puts headers.inspect
+
     result = {
       processing_overhead: request_processing_time - params[:delay].to_f,
       queue_time: queue_time,
