@@ -30,7 +30,7 @@ class PublicController < ApplicationController
   private
 
   def delayed_render
-    request_start = request.env['HTTP_X_REQUEST_START'].presence&.yield_self {|t| Time.at(t.to_f / 1000).to_datetime } || DateTime.now
+    request_start = request.env['HTTP_X_REQUEST_START'].presence&.yield_self {|t| Time.at(t.to_f / 1_000_000).to_datetime } || DateTime.now
     request_processing_start = DateTime.now
     yield params[:delay].to_f
     request_processing_end = DateTime.now
