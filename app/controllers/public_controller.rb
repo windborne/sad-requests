@@ -30,7 +30,7 @@ class PublicController < ApplicationController
   private
 
   def delayed_render
-    request_start = headers['X-Request-Start'].presence&.yield_self {|t| Time.at(t.to_f).to_datetime } || DateTime.now
+    request_start = request.env['HTTP_X_REQUEST_START'].presence&.yield_self {|t| Time.at(t.to_f / 1000).to_datetime } || DateTime.now
     request_processing_start = DateTime.now
     yield params[:delay].to_f
     request_processing_end = DateTime.now
@@ -44,7 +44,7 @@ class PublicController < ApplicationController
       processing_overhead: request_processing_time - params[:delay].to_f,
       queue_time: queue_time,
 
-      request_start_raw: headers['X-Request-Start'],
+      request_start_raw: request.env['HTTP_X_REQUEST_START'],
       request_start: request_start,
       request_processing_start: request_processing_start,
       request_processing_end: request_processing_end,
