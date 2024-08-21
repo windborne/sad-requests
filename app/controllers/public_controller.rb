@@ -18,6 +18,15 @@ class PublicController < ApplicationController
     end
   end
 
+  def show_headers
+    lines = []
+    self.request.env.each do |header|
+      lines << "#{header[0]}: #{header[1]}" if header[0].start_with?('HTTP_')
+    end
+
+    render plain: lines.join("\n")
+  end
+
   private
 
   def delayed_render
