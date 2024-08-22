@@ -90,3 +90,19 @@ Sample #7 was the same as 1.
 1. Health check failed
 2. Restart without failed health check
 3. Restart without failed health check
+
+### Increasing concurrency
+When I increased the number of workers, it would sometimes send requests to the same worker:
+```text
+HTTP/1.1 200    10.24 secs:      91 bytes ==> GET  /sleep?delay=10
+HTTP/1.1 200    20.24 secs:      91 bytes ==> GET  /sleep?delay=10
+HTTP/1.1 200    10.23 secs:      91 bytes ==> GET  /sleep?delay=10
+HTTP/1.1 200    10.24 secs:      90 bytes ==> GET  /sleep?delay=10
+HTTP/1.1 200    10.24 secs:      90 bytes ==> GET  /sleep?delay=10
+HTTP/1.1 200    10.21 secs:      91 bytes ==> GET  /sleep?delay=10
+HTTP/1.1 200    10.22 secs:      91 bytes ==> GET  /sleep?delay=10
+HTTP/1.1 200    10.23 secs:      91 bytes ==> GET  /sleep?delay=10
+HTTP/1.1 200    20.00 secs:      91 bytes ==> GET  /sleep?delay=10
+HTTP/1.1 200    11.15 secs:      91 bytes ==> GET  /sleep?delay=10
+HTTP/1.1 200    10.22 secs:      89 bytes ==> GET  /sleep?delay=10
+```
